@@ -9,4 +9,12 @@ export const routes: Routes = [
       );
     },
   },
+  {
+    path: 'todo-list',
+    loadComponent() {
+      return import('./pages/todo-list/todo-list.component').then(
+        (m) => m.TodoListComponent
+      );
+    },
+  },
 ];

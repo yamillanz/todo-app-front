@@ -13,7 +13,7 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+                <!-- <th style="width: 4rem"><p-tableHeaderCheckbox /></th> -->
                 <th>Titulo</th>
                 <th>Descripcion</th>
                 <th>Creacion</th>
@@ -21,15 +21,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-todoItem>
-            <tr>
-                <td>
-                    <p-tableCheckbox [value]="todoItem" />
-                </td>
-                <td>{{todoItem.code}}</td>
-                <td>{{todoItem.name}}</td>
-                <td>{{todoItem.category}}</td>
-                <td>{{todoItem.quantity}}</td>
-            </tr>
+            <app-todo-details [todoItem]="todoItem"/>
         </ng-template>
     </p-table>
 </div>

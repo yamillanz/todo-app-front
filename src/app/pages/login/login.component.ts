@@ -7,7 +7,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { UserService } from '../../servicies/user.service';
 
 @Component({
@@ -30,7 +36,22 @@ export class LoginComponent {
   searchEmail$ = this.loginFormGoup.get('email')?.valueChanges.pipe(
     debounceTime(300),
     distinctUntilChanged(),
-    tap((value) => console.log(value))
+    filter(
+      (email) => email.length > 3 && !!this.loginFormGoup.get('email')?.valid
+    )
+    // tap((value) => console.log(value))
+  );
+
+  emailAlreadySaved$ = this.searchEmail$?.pipe(
+    // filter(
+    //   () =>
+    //     this.loginFormGoup.touched &&
+    //     this.loginFormGoup.dirty &&
+    //     // this.loginFormGoup.valid &&
+    //     !!this.loginFormGoup.get('email')?.valid
+    // ),
+    switchMap((email) => this.userSevice.findaUserByEmail(email))
+    // tap((user) => console.log('user', user))
   );
 
   saveNewUser() {

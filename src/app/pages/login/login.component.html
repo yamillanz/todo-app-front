@@ -2,7 +2,9 @@
     <div class="text-center mb-5">
         <div class="text-900 text-3xl font-medium mb-3">Welcome</div>
         <!-- <span class="text-600 font-medium line-height-3">Don't have an account?</span>
-        <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a> -->
+        <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a> 
+        loginFormGoup.touched && loginFormGoup.dirty && loginFormGoup.get('email')?.valid && 
+        -->
     </div>
 
     <div>
@@ -12,13 +14,14 @@
                 formControlName="email">
             <span *ngIf="loginFormGoup.touched && loginFormGoup.dirty && loginFormGoup.get('email')?.errors"
                 class="text-red-500">Email no válido</span>
-            <div *ngIf="loginFormGoup.touched && loginFormGoup.dirty && loginFormGoup.get('email')?.valid"
-                class="text-xs mb-4 flex justify-content-end vertical-align-text-bottom">
-                <span class="mr-2 flex vertical-align-middle h-max">Usuario No registrado. ¿Desea registrar?</span>
-                <!-- <button>Registrar</button> -->
-                <!-- <p-button label="Regsitrar" icon="pi pi-check" (onClick)="saveNewUser()" size="small" /> -->
-                <p-button icon="pi pi-save" severity="success" (onClick)="saveNewUser()" />
-            </div>
+            <ng-container
+                *ngIf="!((emailAlreadySaved$ | async)?.email) && loginFormGoup.touched && loginFormGoup.dirty && loginFormGoup.get('email')?.valid
+                && loginFormGoup.get('email')?.value !== '' && (loginFormGoup.get('email')?.value?.length ?? 0) > 3">
+                <div class="text-xs mb-4 flex justify-content-end vertical-align-text-bottom">
+                    <span class="mr-2 flex vertical-align-middle h-max">No registrado. ¿Desea registrar?</span>
+                    <p-button icon="pi pi-save" severity="success" (onClick)="saveNewUser()" />
+                </div>
+            </ng-container>
 
             <button pButton pRipple label="Vamos al Todo" icon="pi pi-user" class="w-full"></button>
         </form>

@@ -1,5 +1,5 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,12 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  distinctUntilKeyChanged,
-  tap,
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import { UserService } from '../../servicies/user.service';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +18,8 @@ import {
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  userSevice = inject(UserService);
+
   loginFormGoup = new FormGroup({
     email: new FormControl('', {
       nonNullable: true,
@@ -35,11 +33,6 @@ export class LoginComponent {
     tap((value) => console.log(value))
   );
 
-  // $searchEmail = this.loginFormGoup.valueChanges.pipe(
-  //   // debounceTime(300),
-  //   // distinctUntilKeyChanged('email'),
-  //   tap((value) => console.log(value))
-  // );
   saveNewUser() {
     console.log('Salvado!');
   }

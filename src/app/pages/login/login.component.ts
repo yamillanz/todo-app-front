@@ -1,5 +1,5 @@
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,23 +8,25 @@ import {
 } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import {
+  Subject,
   debounceTime,
   distinctUntilChanged,
   filter,
   switchMap,
-  tap,
+  takeUntil,
 } from 'rxjs';
 import { UserService } from '../../servicies/user.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ButtonModule, ReactiveFormsModule, CommonModule, AsyncPipe],
+  imports: [ButtonModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   userSevice = inject(UserService);
+  private destroy$ = new Subject<void>();
 
   loginFormGoup = new FormGroup({
     email: new FormControl('', {
@@ -35,19 +37,31 @@ export class LoginComponent {
 
   searchEmail$ = this.loginFormGoup.get('email')?.valueChanges.pipe(
     debounceTime(300),
-    distinctUntilChanged(),
     filter(
       (email) => email.length > 3 && !!this.loginFormGoup.get('email')?.valid
-    )
-    // tap((value) => console.log(value))
+    ),
+    distinctUntilChanged()
   );
 
-  emailAlreadySaved$ = this.searchEmail$?.pipe(
-    switchMap((email) => this.userSevice.findaUserByEmail(email))
- 
-  );
+  emailAlreadySaved: boolean = false;
+
+  emailAlreadySaved$ = this.searchEmail$
+    ?.pipe(
+      switchMap((email) => this.userSevice.findaUserByEmail(email)),
+      takeUntil(this.destroy$)
+    )
+    .subscribe((user) => {
+      this.emailAlreadySaved = !!!user?.email;
+      // console.log(user);
+      // console.log(this.emailAlreadySaved);
+    });
 
   saveNewUser() {
     console.log('Salvado!');
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

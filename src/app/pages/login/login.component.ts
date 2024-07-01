@@ -43,15 +43,8 @@ export class LoginComponent {
   );
 
   emailAlreadySaved$ = this.searchEmail$?.pipe(
-    // filter(
-    //   () =>
-    //     this.loginFormGoup.touched &&
-    //     this.loginFormGoup.dirty &&
-    //     // this.loginFormGoup.valid &&
-    //     !!this.loginFormGoup.get('email')?.valid
-    // ),
     switchMap((email) => this.userSevice.findaUserByEmail(email))
-    // tap((user) => console.log('user', user))
+ 
   );
 
   saveNewUser() {

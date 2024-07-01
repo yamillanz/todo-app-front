@@ -40,4 +40,7 @@ export class LoginComponent {
   //   // distinctUntilKeyChanged('email'),
   //   tap((value) => console.log(value))
   // );
+  saveNewUser() {
+    console.log('Salvado!');
+  }
 }

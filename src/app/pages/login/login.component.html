@@ -17,7 +17,9 @@
                 <p-button icon="pi pi-save" severity="success" (onClick)="saveNewUser()" />
             </div>
             }
-            <button pButton pRipple label="Vamos al Todo" icon="pi pi-user" class="w-full"></button>
+            
+            <button pButton pRipple label="Vamos al Todo" icon="pi pi-user" class="w-full"
+                [disabled]="!loginFormGoup.dirty || !loginFormGoup.get('email')?.valid || !(loginFormGoup.get('email')?.value !== '')"></button>
         </form>
     </div>
 </div>

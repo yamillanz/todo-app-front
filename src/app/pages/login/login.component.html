@@ -18,8 +18,8 @@
             </div>
             }
             
-            <button pButton pRipple label="Vamos al Todo" icon="pi pi-user" class="w-full"
-                [disabled]="!loginFormGoup.dirty || !loginFormGoup.get('email')?.valid || !(loginFormGoup.get('email')?.value !== '')"></button>
+            <button pButton pRipple label="Vamos al TODO" icon="pi pi-user" class="w-full"
+                [disabled]="!loginFormGoup.dirty || !loginFormGoup.get('email')?.valid || !(loginFormGoup.get('email')?.value !== '')" (click)="gotoTODOs()"></button>
         </form>
     </div>
 </div>

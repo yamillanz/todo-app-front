@@ -16,6 +16,7 @@ import {
   takeUntil,
 } from 'rxjs';
 import { UserService } from '../../servicies/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ import { UserService } from '../../servicies/user.service';
 export class LoginComponent implements OnDestroy {
   userSevice = inject(UserService);
   private destroy$ = new Subject<void>();
+  private router = inject(Router);
 
   loginFormGoup = new FormGroup({
     email: new FormControl('', {
@@ -58,6 +60,11 @@ export class LoginComponent implements OnDestroy {
 
   saveNewUser() {
     console.log('Salvado!');
+  }
+
+  gotoTODOs() {
+    const email = this.loginFormGoup.get('email')?.value;
+    this.router.navigate(['/todo-list', email]);
   }
 
   ngOnDestroy(): void {

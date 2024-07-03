@@ -10,7 +10,7 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'todo-list',
+    path: 'todo-list/:email',
     loadComponent() {
       return import('./pages/todo-list/todo-list.component').then(
         (m) => m.TodoListComponent

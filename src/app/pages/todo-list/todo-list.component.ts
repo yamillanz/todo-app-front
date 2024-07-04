@@ -4,6 +4,9 @@ import { TodoListActiveComponent } from '../../components/todo-list-active/todo-
 import { FormTodoComponent } from '../../components/form-todo/form-todo.component';
 import { TodoListHistoryComponent } from '../../components/todo-list-history/todo-list-history.component';
 import { ActivatedRoute } from '@angular/router';
+import { TodoService } from '../../servicies/todo.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-todo-list',
@@ -13,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
     TodoListActiveComponent,
     TodoListHistoryComponent,
     FormTodoComponent,
+    AsyncPipe,
   ],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss',
@@ -20,8 +24,12 @@ import { ActivatedRoute } from '@angular/router';
 export class TodoListComponent {
   email: string | null = null;
   route = inject(ActivatedRoute);
+  todoService = inject(TodoService);
+
+  todoList$: Observable<any[]> = new Observable<any[]>();
 
   ngOnInit(): void {
     this.email = this.route.snapshot.paramMap.get('email');
+    this.todoList$ = this.todoService.getAllByUser(this.email ?? '');
   }
 }

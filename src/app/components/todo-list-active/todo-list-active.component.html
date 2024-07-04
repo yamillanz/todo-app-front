@@ -13,15 +13,16 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <!-- <th style="width: 4rem"><p-tableHeaderCheckbox /></th> -->
                 <th>Titulo</th>
                 <th>Descripcion</th>
                 <th>Creacion</th>
-                <th>&nbsp;</th>
+                <th style="width:15rem">&nbsp;</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-todoItem>
-            <app-todo-details [todoItem]="todoItem"/>
+            <div ngSkipHydration>
+                <app-todo-details [todoItem]="todoItem" />
+            </div>
         </ng-template>
     </p-table>
 </div>

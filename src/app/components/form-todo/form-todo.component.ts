@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -16,15 +24,39 @@ import { InputTextModule } from 'primeng/inputtext';
   templateUrl: './form-todo.component.html',
   styleUrl: './form-todo.component.scss',
 })
-export class FormTodoComponent implements OnInit {
+export class FormTodoComponent implements OnInit, OnChanges {
   todoForm!: FormGroup;
+  @Input() todoToEdit: any;
+  @Output() todoToEditChange = new EventEmitter<any>();
 
   ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm() {
     this.todoForm = new FormGroup({
-      title: new FormControl(null, Validators.required),
-      description: new FormControl(null, Validators.required),
+      title: new FormControl(this.todoToEdit?.title ?? '', Validators.required),
+      description: new FormControl(
+        this.todoToEdit?.description ?? '',
+        Validators.required
+      ),
     });
   }
 
-  saveProduct() {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['firstChange']) {
+      this.initForm();
+    }
+  }
+
+  saveProduct() {
+    if (this.todoForm.valid) {
+      const editedTodo = {
+        ...this.todoToEdit,
+        ...this.todoForm.value,
+      };
+      this.todoForm.reset();
+      this.todoToEditChange.emit(editedTodo);
+    }
+  }
 }

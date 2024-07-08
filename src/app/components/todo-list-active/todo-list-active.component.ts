@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,6 +7,7 @@ import { TableModule } from 'primeng/table';
 // import { Observable } from 'rxjs';
 import { TodoDetailsComponent } from '../todo-details/todo-details.component';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-todo-list-active',
@@ -22,18 +23,22 @@ import { ButtonModule } from 'primeng/button';
   ],
   templateUrl: './todo-list-active.component.html',
   styleUrl: './todo-list-active.component.scss',
+  providers: [ConfirmationService],
 })
 export class TodoListActiveComponent {
   @Input() todoList!: any[];
-  // todoList$: Observable<any[]> | unknown = [];
+  @Output() selectedTodoChange = new EventEmitter<any>();
+  confirmSvc = Inject(ConfirmationService);
 
   selectedtodoList!: any;
 
-  editTask(todo: any): void {
+  saveTask(todo: any): void {
     this.selectedtodoList = todo;
+    this.selectedTodoChange.emit(this.selectedtodoList);
   }
 
-  deleteTask(todo: any): void {
-    this.todoList = this.todoList.filter((t) => t.id !== todo.id);
+  actionTask(todo: any, action: string): void {
+    todo.status = action;
+    this.selectedTodoChange.emit(todo);
   }
 }

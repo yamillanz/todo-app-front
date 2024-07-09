@@ -7,7 +7,13 @@ import { TableModule } from 'primeng/table';
 // import { Observable } from 'rxjs';
 import { TodoDetailsComponent } from '../todo-details/todo-details.component';
 import { ButtonModule } from 'primeng/button';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
+const enum ACTIONS {
+  delete = 'deleted',
+  done = 'done',
+}
 
 @Component({
   selector: 'app-todo-list-active',
@@ -20,17 +26,20 @@ import { ConfirmationService } from 'primeng/api';
     CommonModule,
     TodoDetailsComponent,
     ButtonModule,
+    ConfirmDialogModule,
   ],
   templateUrl: './todo-list-active.component.html',
   styleUrl: './todo-list-active.component.scss',
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, MessageService],
 })
 export class TodoListActiveComponent {
   @Input() todoList!: any[];
   @Output() selectedTodoChange = new EventEmitter<any>();
-  confirmSvc = Inject(ConfirmationService);
-
+  // confirmSvc = Inject(ConfirmationService);
+  // messageSvc = Inject(MessageService);
   selectedtodoList!: any;
+
+  constructor(private confirmSvc: ConfirmationService) {}
 
   saveTask(todo: any): void {
     this.selectedtodoList = todo;
@@ -38,7 +47,24 @@ export class TodoListActiveComponent {
   }
 
   actionTask(todo: any, action: string): void {
-    todo.status = action;
-    this.selectedTodoChange.emit(todo);
+    const mensaje = action === ACTIONS.delete ? 'BORRAR' : 'pasar a DONE';
+    // if (action === 'deleted') {
+    this.confirmSvc.confirm({
+      message: `¿Seguro de ${mensaje}?`,
+      header: 'Confirmation',
+      icon: 'pi pi-info-circle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => {
+        todo.status = action;
+        this.selectedTodoChange.emit(todo);
+        return;
+      },
+      reject: () => {},
+      key: 'positionDialog',
+    });
+    // }
+    // this.selectedTodoChange.emit(todo);
   }
 }

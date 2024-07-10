@@ -16,11 +16,12 @@ import {
 } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-form-todo',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, InputTextModule, ButtonModule],
+  imports: [ReactiveFormsModule, CommonModule, InputTextModule, ButtonModule, InputTextareaModule],
   templateUrl: './form-todo.component.html',
   styleUrl: './form-todo.component.scss',
 })

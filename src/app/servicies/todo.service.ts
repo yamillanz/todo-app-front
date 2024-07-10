@@ -20,6 +20,10 @@ export class TodoService {
     return this.http.get<any[]>(`${this.baseUrl}/by-user/${userId}`);
   }
 
+  getAllByUserHistory(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/by-user/${userId}/history`);
+  }
+
   updateTodo(todoId: string, todoData: any) {
     return this.http.put(`${this.baseUrl}/${todoId}`, todoData);
   }

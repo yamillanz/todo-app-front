@@ -8,5 +8,5 @@
 <div class="mt-3 lg:mx-3">
     <app-todo-list-active [todoList]="(todoList$ | async) ?? []" (selectedTodoChange)="onSelectedTodoChange($event)" />
     <div class="mt-8"></div>
-    <app-todo-list-history></app-todo-list-history>
+    <app-todo-list-history [historyTodoList]="todoListHistory" />
 </div>

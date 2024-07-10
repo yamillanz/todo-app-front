@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
@@ -11,5 +12,5 @@ import { TableModule } from 'primeng/table';
   styleUrl: './todo-list-history.component.scss',
 })
 export class TodoListHistoryComponent {
-  historyTodoList: any[] = [];
+  @Input() historyTodoList: any[] = [];
 }

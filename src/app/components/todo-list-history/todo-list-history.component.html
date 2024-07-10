@@ -23,10 +23,10 @@
         <ng-template pTemplate="body" let-todoItem>
             <tr>
 
-                <td>{{todoItem.code}}</td>
-                <td>{{todoItem.name}}</td>
-                <td>{{todoItem.category}}</td>
-                <td>{{todoItem.quantity}}</td>
+                <td>{{todoItem.title}}</td>
+                <td>{{todoItem.description}}</td>
+                <td>{{todoItem.createdAt}}</td>
+                <td>{{todoItem.completed}}</td>
             </tr>
         </ng-template>
     </p-table>

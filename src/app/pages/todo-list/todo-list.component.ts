@@ -97,7 +97,7 @@ export class TodoListComponent implements OnDestroy {
     }
   }
 
-  async onTodoChange(updatedTodo: any) {
+  async onTodoChange(updatedTodo: TodoDTO) {
     try {
       if (updatedTodo.uuid) {
         await firstValueFrom(
@@ -105,7 +105,7 @@ export class TodoListComponent implements OnDestroy {
         );
         console.log('Response: Todo updated successfully');
       } else {
-        updatedTodo.userId = this.email;
+        updatedTodo.userId = this.email ?? '';
         await firstValueFrom(this.todoService.saveTodo(updatedTodo));
         console.log('Response: Todo saved successfully');
       }

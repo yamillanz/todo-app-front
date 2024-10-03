@@ -17,6 +17,8 @@
                 <th>Descripcion</th>
                 <th>Creacion</th>
                 <th>Date done</th>
+                <th style="width:15rem">&nbsp;</th>
+
 
             </tr>
         </ng-template>
@@ -26,8 +28,15 @@
                 <td>{{todoItem.title}}</td>
                 <td>{{todoItem.description}}</td>
                 <td>{{todoItem.createdAt | date:'dd/mm/yyyy h:mma'}}</td>
-                <td>{{todoItem.completed | date:'dd/mm/yyyy h:mma'}}</td>
+                <td>{{todoItem.completedAt | date:'dd/mm/yyyy h:mma'}}</td>
+                <td class="flex justify-content-evenly">
+
+                    <div> <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
+                            (click)="actionTask(todoItem, 'undo')" />
+                    </div>
+                </td>
             </tr>
         </ng-template>
     </p-table>
+    <p-confirmDialog key="positionDialog" position="center" rejectButtonStyleClass="p-button-outlined" />
 </div>

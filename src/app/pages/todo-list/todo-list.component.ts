@@ -14,6 +14,7 @@ import {
   takeUntil,
 } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { TodoDTO } from '../../shared/TodoDTO';
 
 @Component({
   selector: 'app-todo-list',
@@ -84,6 +85,7 @@ export class TodoListComponent implements OnDestroy {
 
       if (selectedTodo.status === 'done') {
         selectedTodo.completed = true;
+        selectedTodo.completedAt = new Date().toISOString();
         await firstValueFrom(
           this.todoService.updateTodo(selectedTodo.uuid, selectedTodo)
         );
@@ -108,6 +110,20 @@ export class TodoListComponent implements OnDestroy {
         console.log('Response: Todo saved successfully');
       }
       this.todoToEdit = {};
+      this.updateList();
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  }
+
+  async onUndoTask(todo: TodoDTO) {
+    try {
+      delete todo.status;
+      todo.completed = false;
+      todo.completedAt = null;
+      todo.uuid &&
+        (await firstValueFrom(this.todoService.updateTodo(todo.uuid, todo)));
+
       this.updateList();
     } catch (error) {
       console.error('An error occurred:', error);

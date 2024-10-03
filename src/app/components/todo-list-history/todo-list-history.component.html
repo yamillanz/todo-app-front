@@ -14,8 +14,10 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Titulo</th>
-                <th>Descripcion</th>
-                <th>Creacion</th>
+                <th>Descripción</th>
+                <th pSortableColumn="createdAt">
+                    Creación <p-sortIcon field="createdAt" />
+                </th>
                 <th>Date done</th>
                 <th style="width:15rem">&nbsp;</th>
 
@@ -31,7 +33,7 @@
                 <td>{{todoItem.completedAt | date:'dd/mm/yyyy h:mma'}}</td>
                 <td class="flex justify-content-evenly">
 
-                    <div> <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
+                    <div> <p-button pRipple icon="pi pi-undo" severity="success" [rounded]="true" [outlined]="true"
                             (click)="actionTask(todoItem, 'undo')" />
                     </div>
                 </td>

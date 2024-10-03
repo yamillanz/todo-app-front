@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import GENERAL_CONSTANTS from '../shared/Constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
   private readonly http = inject(HttpClient);
-  private baseUrl =
-    'http://127.0.0.1:5001/todo-app-c9ea4/us-central1/app/tasks';
+  private baseUrl = GENERAL_CONSTANTS.BACKEND_URL_PROD + 'tasks';
 
   constructor() {}
 

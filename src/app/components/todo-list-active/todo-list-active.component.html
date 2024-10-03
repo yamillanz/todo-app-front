@@ -15,8 +15,10 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Titulo</th>
-                <th>Descripcion</th>
-                <th>Creacion</th>
+                <th>Descripción</th>
+                <th pSortableColumn="createdAt">
+                    Creación <p-sortIcon field="createdAt" />
+                </th>
                 <th>Estado</th>
                 <th style="width:15rem">&nbsp;</th>
             </tr>

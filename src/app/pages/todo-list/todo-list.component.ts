@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { TodoListActiveComponent } from '../../components/todo-list-active/todo-list-active.component';
 import { FormTodoComponent } from '../../components/form-todo/form-todo.component';
@@ -15,6 +15,7 @@ import {
 } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { TodoDTO } from '../../shared/TodoDTO';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-todo-list',
@@ -38,7 +39,8 @@ export class TodoListComponent implements OnDestroy {
   todoListHistory: any[] = [];
   todoToEdit: any;
 
-  subjectDestroy = new Subject();
+  // subjectDestroy = new Subject();
+  _destryRef = inject(DestroyRef);
 
   ngOnInit(): void {
     this.email = this.route.snapshot.paramMap.get('email');
@@ -46,7 +48,8 @@ export class TodoListComponent implements OnDestroy {
 
     this.todoService
       .getAllByUserHistory(this.email ?? '')
-      .pipe(take(1), takeUntil(this.subjectDestroy))
+      // .pipe(take(1), takeUntil(this.subjectDestroy))
+      .pipe(takeUntilDestroyed(this._destryRef))
       .subscribe({
         next: (data) => (this.todoListHistory = [...data]),
         error: (error) => console.error('An error occurred:', error),
@@ -57,9 +60,11 @@ export class TodoListComponent implements OnDestroy {
     this.todoList$ = this.todoService
       .getAllByUser(this.email ?? '')
       .pipe(switchMap(() => this.todoService.getAllByUser(this.email ?? '')));
+
     this.todoService
       .getAllByUserHistory(this.email ?? '')
-      .pipe(take(1), takeUntil(this.subjectDestroy))
+      // .pipe(take(1), takeUntil(this.subjectDestroy))
+      .pipe(takeUntilDestroyed(this._destryRef))
       .subscribe({
         next: (data) => (this.todoListHistory = [...data]),
         error: (error) => console.error('An error occurred:', error),
@@ -67,8 +72,8 @@ export class TodoListComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subjectDestroy.next('');
-    this.subjectDestroy.complete();
+    // this.subjectDestroy.next('');
+    // this.subjectDestroy.complete();
   }
 
   async onSelectedTodoChange(selectedTodo: any): Promise<void> {

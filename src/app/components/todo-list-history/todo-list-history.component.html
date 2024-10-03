@@ -25,8 +25,8 @@
 
                 <td>{{todoItem.title}}</td>
                 <td>{{todoItem.description}}</td>
-                <td>{{todoItem.createdAt}}</td>
-                <td>{{todoItem.completed}}</td>
+                <td>{{todoItem.createdAt | date:'dd/mm/yyyy h:mma'}}</td>
+                <td>{{todoItem.completed | date:'dd/mm/yyyy h:mma'}}</td>
             </tr>
         </ng-template>
     </p-table>

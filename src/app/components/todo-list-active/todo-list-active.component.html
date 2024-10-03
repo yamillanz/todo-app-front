@@ -1,6 +1,7 @@
 <div class="card">
     <p-table #dt [value]="todoList" [(selection)]="selectedtodoList" dataKey="code"
-        [tableStyle]="{'min-width': '50rem'}" [paginator]="true" [rows]="5">
+        [tableStyle]="{'min-width': '50rem'}" [paginator]="true" [rows]="5"
+        [globalFilterFields]="['title', 'description']">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 <h3 class="m-0">Lista de TODOs</h3>
@@ -16,6 +17,7 @@
                 <th>Titulo</th>
                 <th>Descripcion</th>
                 <th>Creacion</th>
+                <th>Estado</th>
                 <th style="width:15rem">&nbsp;</th>
             </tr>
         </ng-template>
@@ -24,7 +26,8 @@
             <tr>
                 <td>{{todoItem.title}}</td>
                 <td>{{todoItem.description}}</td>
-                <td>{{todoItem.createdAt}}</td>
+                <td>{{todoItem.createdAt | date:'dd/mm/yyyy h:mma'}}</td>
+                <td>pediente</td>
                 <td class="flex justify-content-evenly">
                     <div>
                         <p-button pRipple icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true"

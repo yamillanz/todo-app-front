@@ -43,10 +43,6 @@ export class TodoListComponent implements OnDestroy {
     this.email = this.route.snapshot.paramMap.get('email');
     this.todoList$ = this.todoService.getAllByUser(this.email ?? '');
 
-    // this.todoService.getAllByUserHistory(this.email ?? '').subscribe({
-    //   next: (data) => (this.todoListHistory = [...data]),
-    //   error: (error) => console.error('An error occurred:', error),
-    // });
     this.todoService
       .getAllByUserHistory(this.email ?? '')
       .pipe(take(1), takeUntil(this.subjectDestroy))
@@ -72,7 +68,6 @@ export class TodoListComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.subjectDestroy.next('');
     this.subjectDestroy.complete();
-    // console.log('Destroying TodoListComponent');
   }
 
   async onSelectedTodoChange(selectedTodo: any): Promise<void> {

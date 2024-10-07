@@ -1,20 +1,20 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, Input } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ButtonModule],
+  imports: [ButtonModule, RouterLink],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   @Input() email: string | null = null;
-
   constructor(private router: Router) {}
 
-  goBack() {
-    this.router.navigate(['']);
+  goBack(event: any) {
+    event.preventDefault();
+    this.router.navigate(['login']);
   }
 }

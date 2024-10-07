@@ -10,7 +10,6 @@ import {
   Observable,
   Subject,
   switchMap,
-  take,
   takeUntil,
 } from 'rxjs';
 import { AsyncPipe } from '@angular/common';

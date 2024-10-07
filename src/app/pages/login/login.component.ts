@@ -15,11 +15,9 @@ import {
 import { ButtonModule } from 'primeng/button';
 import {
   Subject,
-  concatMap,
   debounceTime,
   distinctUntilChanged,
   filter,
-  firstValueFrom,
   switchMap,
   takeUntil,
   tap,
@@ -33,13 +31,11 @@ import { Router } from '@angular/router';
   imports: [ButtonModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnDestroy {
   userSevice = inject(UserService);
   private destroy$ = new Subject<void>();
   private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef);
   emailAlreadySaved: boolean = false;
 
   loginFormGoup = new FormGroup({
@@ -65,14 +61,12 @@ export class LoginComponent implements OnDestroy {
     )
     .subscribe((user) => {
       this.emailAlreadySaved = !!!user?.email;
-      this.cdr.detectChanges();
     });
 
   saveNewUser() {
     console.log('Salvado!');
     this.userSevice
       .saveUser(this.loginFormGoup.get('email')?.value)
-      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (_) => {
           this.gotoTODOs();
@@ -89,9 +83,9 @@ export class LoginComponent implements OnDestroy {
     this.router.navigate(['/todo-list', email]);
   }
 
-  onBlur() {
-    this.cdr.detectChanges();
-  }
+  // onBlur() {
+  //   this.cdr.detectChanges();
+  // }
 
   shouldShowRegisterButton(): boolean | undefined {
     const emailControl = this.loginFormGoup.get('email');
@@ -103,6 +97,10 @@ export class LoginComponent implements OnDestroy {
       emailControl?.value !== '' &&
       (emailControl?.value?.length ?? 0) > 3
     );
+  }
+
+  onSubmit(event: Event): void {
+    event.preventDefault();
   }
 
   ngOnDestroy(): void {

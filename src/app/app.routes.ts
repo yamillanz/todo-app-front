@@ -3,7 +3,7 @@ import { TodoListComponent } from './pages/todo-list/todo-list.component';
 
 export const routes: Routes = [
   {
-    path: 'login',
+    path: '',
     loadComponent() {
       return import('./pages/login/login.component').then(
         (m) => m.LoginComponent
@@ -17,10 +17,5 @@ export const routes: Routes = [
         (m) => m.TodoListComponent
       );
     },
-  },
-  {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full',
   },
 ];

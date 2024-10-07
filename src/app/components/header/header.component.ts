@@ -15,6 +15,6 @@ export class HeaderComponent {
 
   goBack(event: any) {
     event.preventDefault();
-    this.router.navigate(['login']);
+    this.router.navigate(['']);
   }
 }

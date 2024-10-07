@@ -1,0 +1,27 @@
+<div class="surface-card w-full shadow-2 border-round pt-4 px-4 pb-2">
+    <form [formGroup]="todoForm">
+        <div class="field grid">
+            <label for="title" class="col">Titulo</label>
+            <!-- <input id="title" type="text" pInputText formControlName="title"> -->
+            <input type="text" pInputText id="title" formControlName="title" class="w-22rem" autofocus />
+
+        </div>
+        <div class="field grid">
+            <label for="description" class="col">Descripción</label>
+            <!-- <input id="description" type="text" pInputText formControlName="description"> -->
+            <textarea rows="5" cols="30" pInputTextarea formControlName="description"></textarea>
+        </div>
+        <div class="field grid">
+            <div class="col">
+                <!-- <button pButton type="submit" label="Submit" [disabled]="todoForm.invalid"></button>
+                  -->
+                <p-button pRipple label="Save" icon="pi pi-check" [text]="true" (click)="saveProduct()" />
+
+            </div>
+            <div class="col">
+                <p-button pRipple label="Cancel" icon="pi pi-times" [text]="true" (click)="todoForm.reset()" />
+                <!-- <button pButton type="button" label="Clear" (click)="todoForm.reset()"></button> -->
+            </div>
+        </div>
+    </form>
+</div>

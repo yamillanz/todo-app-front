@@ -40,4 +40,10 @@ Ejecuta `ng serve` para un servidor de desarrollo. Navega a `http://localhost:42
 
 ```sh
 ng serve
+```
 
+# App:
+Si eres un nuevo usuario te saldra esta pantalla despues de escribir tu emial
+![Pantalla de nuevo usuario](public/new_user.png)
+Aprita el boton que sale debajo de el emial
+![Boton nuevo usuario](public/button_new_user.png)

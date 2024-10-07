@@ -18,6 +18,7 @@
             
             <button pButton pRipple label="Vamos al TODO" icon="pi pi-user" class="w-full"
                 [disabled]="(!loginFormGoup.dirty || !loginFormGoup.get('email')?.valid || !(loginFormGoup.get('email')?.value !== '')) || emailAlreadySaved" (click)="gotoTODOs()"></button>
+            <p class="w-full text-center mt-4">IMPORTANTE: después que escribas tu correro presiona TAB o haz click en cualquier parte de la pantalla</p>
         </form>
     </div>
 </div>

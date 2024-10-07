@@ -7,19 +7,19 @@
         <form [formGroup]="loginFormGoup">
             <label for="email1" class="block text-900 font-medium mb-2">Email</label>
             <input id="email1" type="text" placeholder="Email address" pInputText class="w-full mb-3 h-3rem"
-                formControlName="email">
+                formControlName="email" (focus)="onBlur()">
             <span *ngIf="loginFormGoup.touched && loginFormGoup.dirty && loginFormGoup.get('email')?.errors"
                 class="text-red-500">Email no válido</span>
-            @if (emailAlreadySaved && loginFormGoup.touched && loginFormGoup.dirty && loginFormGoup.get('email')?.valid
-            && loginFormGoup.get('email')?.value !== '' && (loginFormGoup.get('email')?.value?.length ?? 0) > 3) {
-            <div class="text-xs mb-4 flex justify-content-end vertical-align-text-bottom">
+            <!-- @if (emailAlreadySaved && loginFormGoup.touched && loginFormGoup.dirty && loginFormGoup.get('email')?.valid
+            && loginFormGoup.get('email')?.value !== '' && (loginFormGoup.get('email')?.value?.length ?? 0) > 3) { -->
+            <div *ngIf="shouldShowRegisterButton()" class="text-xs mb-4 flex justify-content-end vertical-align-text-bottom">
                 <span class="mr-2 flex vertical-align-middle h-max">No registrado. ¿Desea registrar?</span>
                 <p-button icon="pi pi-save" severity="success" (onClick)="saveNewUser()" />
             </div>
-            }
+            <!-- } -->
             
             <button pButton pRipple label="Vamos al TODO" icon="pi pi-user" class="w-full"
-                [disabled]="!loginFormGoup.dirty || !loginFormGoup.get('email')?.valid || !(loginFormGoup.get('email')?.value !== '')" (click)="gotoTODOs()"></button>
+                [disabled]="(!loginFormGoup.dirty || !loginFormGoup.get('email')?.valid || !(loginFormGoup.get('email')?.value !== '')) || emailAlreadySaved" (click)="gotoTODOs()"></button>
         </form>
     </div>
 </div>

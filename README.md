@@ -43,7 +43,8 @@ ng serve
 ```
 
 # App:
-Si eres un nuevo usuario te saldra esta pantalla despues de escribir tu emial
+Si eres un nuevo usuario te saldra esta pantalla despues de escribir tu emial. 
+**IMPORTANTE: Despues de escribir nu email presiona TAB o hazclck en cualquier parte de la pantalla.**
 ![Pantalla de nuevo usuario](public/new_user.png)
-Aprita el boton que sale debajo de el emial
+Haz click el boton que sale debajo de el emial
 ![Boton nuevo usuario](public/button_new_user.png)

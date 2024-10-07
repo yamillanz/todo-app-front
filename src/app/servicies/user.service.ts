@@ -14,4 +14,8 @@ export class UserService {
   findaUserByEmail(email: string) {
     return this.#httpClient.get<any>(`${this.baseUrl}/${email}`);
   }
+
+  saveUser(user: any) {
+    return this.#httpClient.post<any>(this.baseUrl, { email: user });
+  }
 }

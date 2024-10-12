@@ -9,7 +9,7 @@ import { TodoDTO } from '../shared/TodoDTO';
 })
 export class TodoService {
   private readonly http = inject(HttpClient);
-  private baseUrl = GENERAL_CONSTANTS.BACKEND_URL + 'tasks';
+  private baseUrl = GENERAL_CONSTANTS.BACKEND_URL_PROD + 'tasks';
 
   constructor() {}
 

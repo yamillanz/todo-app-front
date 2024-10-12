@@ -7,7 +7,7 @@ import GENERAL_CONSTANTS from '../shared/Constants';
 })
 export class UserService {
   #httpClient = inject(HttpClient);
-  private baseUrl = GENERAL_CONSTANTS.BACKEND_URL + 'users';
+  private baseUrl = GENERAL_CONSTANTS.BACKEND_URL_PROD + 'users';
 
   constructor() {}
 

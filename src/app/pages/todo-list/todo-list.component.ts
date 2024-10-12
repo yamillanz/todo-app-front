@@ -75,12 +75,13 @@ export class TodoListComponent implements OnDestroy {
     // this.subjectDestroy.complete();
   }
 
-  async onSelectedTodoChange(selectedTodo: any): Promise<void> {
+  async onSelectedTodoChange(selectedTodo: TodoDTO): Promise<void> {
     (!selectedTodo.status || selectedTodo.status === '') &&
       (this.todoToEdit = selectedTodo);
 
     if (!selectedTodo.status) return;
-
+    if (!selectedTodo.uuid) return;
+    
     try {
       if (selectedTodo.status === 'deleted') {
         await firstValueFrom(this.todoService.deleteTodo(selectedTodo.uuid));

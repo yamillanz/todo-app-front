@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import GENERAL_CONSTANTS from '../shared/Constants';
+import { TodoDTO } from '../shared/TodoDTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
   private readonly http = inject(HttpClient);
-  private baseUrl = GENERAL_CONSTANTS.BACKEND_URL_PROD + 'tasks';
+  private baseUrl = GENERAL_CONSTANTS.BACKEND_URL + 'tasks';
 
   constructor() {}
 
@@ -16,19 +17,19 @@ export class TodoService {
     return this.http.get(`${this.baseUrl}/${todoId}`);
   }
 
-  getAllByUser(userId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/by-user/${userId}`);
+  getAllByUser(userId: string): Observable<TodoDTO[]> {
+    return this.http.get<TodoDTO[]>(`${this.baseUrl}/by-user/${userId}`);
   }
 
-  getAllByUserHistory(userId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/by-user/${userId}/history`);
+  getAllByUserHistory(userId: string): Observable<TodoDTO[]> {
+    return this.http.get<TodoDTO[]>(`${this.baseUrl}/by-user/${userId}/history`);
   }
 
-  updateTodo(todoId: string, todoData: any) {
+  updateTodo(todoId: string, todoData: TodoDTO) {
     return this.http.put(`${this.baseUrl}/${todoId}`, todoData);
   }
 
-  saveTodo(todoData: any) {
+  saveTodo(todoData: TodoDTO) {
     return this.http.post(this.baseUrl, todoData);
   }
 
